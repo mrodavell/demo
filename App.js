@@ -1,15 +1,17 @@
-import { View } from 'react-native'; 
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import Profile from './src/pages/Profile';
+import Login from './src/pages/Login';
+import { PaperProvider } from 'react-native-paper';
 
 export default function App() {
 
   return (
-    <SafeAreaProvider>
-      <SafeAreaView>
-        <Profile />
-      </SafeAreaView>
-    </SafeAreaProvider>
+    <PaperProvider>
+      <SafeAreaProvider>
+        <SafeAreaView style={{ flex: 1, height: '100%'}}>
+          <Login />
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </PaperProvider>
   );
 }
 
