@@ -4,7 +4,7 @@ import styles from '../styles/styles';
 import { useState } from "react";  
 import { useRouter } from "expo-router";
 
-const Login = () => {
+const Main = () => {
 
   const router = useRouter();
   const [togglePassword, setTogglePassword] = useState(false);
@@ -41,7 +41,7 @@ const Login = () => {
             />
         </View>
         <View style={{...loginStyle.section, marginTop: 20}}>
-            <Button onPress={() => console.log("login")} mode="contained" style={loginStyle.button}>
+            <Button onPress={() => router.replace('dashboard')} mode="contained" style={loginStyle.button}>
                 Login
             </Button>
             <View style={{ alignItems: 'center', justifyContent: 'center', marginVertical: 20}}>
@@ -50,7 +50,7 @@ const Login = () => {
             <Button onPress={() => router.push('register')} mode="contained-tonal" style={loginStyle.button}>
                 Register Here
             </Button>  
-            <Button onPress={() => console.log("forgot")} style={{...loginStyle.button, marginTop: 20}}>
+            <Button onPress={() => router.push('forgot')} style={{...loginStyle.button, marginTop: 20}}>
                Forgot Password?
             </Button>           
         </View>
@@ -58,6 +58,6 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Main
 
 const loginStyle = StyleSheet.create(styles)
