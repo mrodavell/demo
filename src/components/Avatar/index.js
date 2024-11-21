@@ -1,14 +1,26 @@
-import { View, Image } from 'react-native'
-import Profile from '../../pages/Profile'
+import { Image, View } from 'react-native'
 
-const Avatar = ({width = 250, height = 250, toggle}) => {
+const Avatar = (props) => {
   return (
-    <View>
-      <Image 
-        source={require('../../assets/avatar.webp')}
-        style={{ width: toggle ? width - 100 : width, height: toggle ? height - 100: height }}
-      />
+    <View
+        style={{    
+            width: props.toggle ? 250 : 150, 
+            height: props.toggle ? 250 : 150, 
+            boxShadow: '#000',
+            border: '15px solid #000', 
+            padding: 5,
+            borderRadius: 75, 
+        }}
+    >
+        <Image 
+                source={require('../../assets/logo.png')}
+                style={{ 
+                    width: '100%',
+                    height: '100%',
+                }} 
+        />
     </View>
+    
   )
 }
 

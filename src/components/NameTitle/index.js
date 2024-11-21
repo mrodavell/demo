@@ -1,11 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import Typography from '../Typography'
 
-const NameTitle = ({toggle}) => {
+const NameTitle = (props) => {
   return (
-    <View>
-      <Text style={{ fontSize: 50, textTransform: toggle ? 'uppercase' : 'lowercase'}}>Jomar</Text>
-      <Text style={{ fontSize: 30, color: toggle ? 'red' : 'gray', textTransform: 'uppercase'}}>Llevado</Text>
+    <View style={{ padding: 10}}>
+        <Typography text="Jomar" size={60} isUpperCase={props.toggle} />
+        <Typography text="Llevado" size={30} color={props.toggle ? "red" : "gray"} />
     </View>
   )
 }

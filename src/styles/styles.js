@@ -3,20 +3,16 @@ export const styles = {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#ccc',
+        backgroundColor: '#F5FCFF',
     },
-    section: {
-        flex: 1,
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
+    welcome: {
+        fontSize: 20,
+        textAlign: 'center',
+        margin: 10,
     },
-    input:{
-        width: '80%',
-        height: 40,
-        padding: 10,
-        backgroundColor: '#fff',
-        borderRadius: 5,
-        marginBottom: 10
-    }
+    instructions: {
+        textAlign: 'center',
+        color: '#333333',
+        marginBottom: 5,
+    },
 }
