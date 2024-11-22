@@ -2,9 +2,11 @@ import { View, StyleSheet } from "react-native"
 import { Avatar, Text, TextInput, Button } from "react-native-paper";
 import styles from '../styles/styles'; 
 import { useState } from "react";  
+import { useRouter } from "expo-router";
 
 const Login = () => {
 
+  const router = useRouter();   
   const [togglePassword, setTogglePassword] = useState(false);
     
   return (
@@ -39,16 +41,16 @@ const Login = () => {
             />
         </View>
         <View style={{...loginStyle.section, marginTop: 20}}>
-            <Button onPress={() => console.log("login")} mode="contained" style={loginStyle.button}>
+            <Button onPress={() => router.replace('dashboard')} mode="contained" style={loginStyle.button}>
                 Login
             </Button>
             <View style={{ alignItems: 'center', justifyContent: 'center', marginVertical: 20}}>
                 <Text>Don't have an account yet?</Text>
             </View>  
-            <Button onPress={() => console.log("register")} mode="contained-tonal" style={loginStyle.button}>
+            <Button onPress={() => router.push('register')} mode="contained-tonal" style={loginStyle.button}>
                 Register Here
             </Button>  
-            <Button onPress={() => console.log("forgot")} style={{...loginStyle.button, marginTop: 20}}>
+            <Button onPress={() => router.push('recovery')} style={{...loginStyle.button, marginTop: 20}}>
                Forgot Password?
             </Button>           
         </View>

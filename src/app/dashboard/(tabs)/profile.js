@@ -1,10 +1,10 @@
 import { View, Button, StyleSheet, Text } from 'react-native'
-import Avatar from '../components/Avatar'
-import NameTitle from '../components/NameTitle'
-import InfoText from '../components/InfoText'
+import Avatar from '../../../components/Avatar'
+import NameTitle from '../../../components/NameTitle'
+import InfoText from '../../../components/InfoText'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useState } from 'react';
-import styles from '../styles/styles.js';
+import styles from '../../../styles/styles.js';
 
 const Profile = () => {
     console.log(styles);
