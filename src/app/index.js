@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput, Text, Button } from 'react-native-paper';
-import MyButton from '../components/MyButton';
-import { Link, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
+import { supabase } from '../lib/supabase';
 
 const Login = () => {
 
@@ -11,6 +11,37 @@ const Login = () => {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState(''); 
     const [isShowPassword, setIsShowPassword] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
+
+    const login = async () => {
+        try{ 
+            setLoading(true);
+
+            if(!email){
+                throw new Error('Email is required');
+            }
+
+            if(!password){
+                throw new Error('Password is required');
+            }
+            
+            const { error } = await supabase.auth.signInWithPassword({
+                email,
+                password
+            });
+ 
+            if(!error){
+                router.replace('dashboard');
+            }else{
+                throw error;
+            }
+
+        }catch(error){
+            Alert.alert('Error', error.message, [{text: 'OK'}]);
+        }finally{
+            setLoading(false);
+        }
+    }
 
   return (
     <SafeAreaView style={loginStyle.container}>
@@ -38,10 +69,10 @@ const Login = () => {
         </View>         
         <View style={{...loginStyle.section}}>
             <View style={{ margin: 5 }}>
-                <MyButton text='Login' action={() => router.replace('dashboard')} mode='contained' size='small' />
+                <Button loading={loading} disabled={loading} onPress={() => login()} mode='contained'>Login</Button>
             </View>
             <View style={{ margin: 5 }}>
-                <MyButton text='Register' action={() => router.push('register')} mode='contained' size='small' />
+                <Button loading={loading} disabled={loading} onPress={() => router.push('register')} mode='contained'>Register</Button>
             </View>
             <View style={{ flexDirection: 'row', marginTop: 40, justifyContent: 'center', alignItems:'center', width: '100%'}}>
                 <Button onPress={() => router.push('recover')} mode='text' style={{ width: '100%'}}>
@@ -62,8 +93,7 @@ const loginStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center', 
     },
-    section: {
-        flex:1,
+    section: { 
         width: '100%',
         padding: 20, 
     },
