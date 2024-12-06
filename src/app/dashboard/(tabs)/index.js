@@ -16,7 +16,7 @@ const Home = () => {
   const [action, setAction] = React.useState('add')
   const [selectedTodo, setSelectedTodo] = React.useState(null)
 
-  const addOrEditTodo = async () => {
+   const addOrEditTodo = async () => {
     try{
       setSubmitting(true);
       
@@ -118,6 +118,21 @@ const Home = () => {
     setTodo('');
     setSelectedTodo(null);
   }
+
+  supabase
+  .channel('todos')
+  .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'todos' }, getTodos)
+  .subscribe()
+
+  supabase
+  .channel('todos')
+  .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'todos' }, getTodos)
+  .subscribe()
+
+  supabase
+  .channel('todos')
+  .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'todos' }, getTodos)
+  .subscribe()
 
   React.useEffect(() => {
     getTodos();
