@@ -33,7 +33,7 @@ const Home = () => {
         if(error){
           throw error;
         }
-        
+       
       }else{
         const { error } = await supabase
         .from('todos')
@@ -50,6 +50,7 @@ const Home = () => {
       Alert.alert('Error', error.message, [{text: 'OK'}]);
     } finally{
       setSubmitting(false);
+      handleCancel();
     }
   }
 
@@ -112,6 +113,12 @@ const Home = () => {
      setTodo(item.todo);
   }
 
+  const handleCancel = () => {
+    setAction('add');
+    setTodo('');
+    setSelectedTodo(null);
+  }
+
   React.useEffect(() => {
     getTodos();
   },[])
@@ -122,15 +129,18 @@ const Home = () => {
         value={todo} 
         onChangeText={text => setTodo(text)}
         placeholder='Enter todo'        
-      />
-      <Button 
-        mode='contained' 
-        onPress={() => addOrEditTodo()} 
-        loading={submitting} 
-        disabled={submitting}
-      >
-        {action === 'add' ? 'Add' : 'Update'}
-      </Button>
+      /> 
+        <Button 
+          mode='contained' 
+          onPress={() => addOrEditTodo()} 
+          loading={submitting} 
+          disabled={submitting}
+        >
+          {action === 'add' ? 'Add' : 'Update'}
+        </Button>
+        {action === 'edit' && 
+          <Button onPress={() => handleCancel()}>Cancel</Button>
+        }  
       <Divider style={{ marginVertical: 10, height: 1.5}} />
       <View style={{flex: 1, borderWidth: 1, justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: 'transparent'}}>
         <Text variant='titleMedium'>List of TODO's</Text>
