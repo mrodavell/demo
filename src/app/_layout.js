@@ -5,6 +5,7 @@ import { PaperProvider } from 'react-native-paper'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { supabase } from '../lib/supabase'
 import { useRouter } from 'expo-router';
+import { userStore } from '../zustand/user';
 
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive
@@ -21,12 +22,20 @@ AppState.addEventListener('change', (state) => {
 const RootLayout = () => {
 
   const router = useRouter();
+  const { setUser } = userStore();
 
   const checkSession = async () => {
     try{
       const {data, error} = await supabase.auth.getUser();
        
       if(data && !error){
+        const userData = {
+            userid: data.user.id,
+            name: data.user.user_metadata.display_name,
+            email: data.user.email,
+        }    
+        
+        setUser(userData);
         router.replace('dashboard')
       }else{
         throw error;

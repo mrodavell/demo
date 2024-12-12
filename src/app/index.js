@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput, Text, Button } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import { supabase } from '../lib/supabase';
+import { userStore } from '../zustand/user';
 
 const Login = () => {
 
@@ -12,6 +13,7 @@ const Login = () => {
     const [password, setPassword] = React.useState(''); 
     const [isShowPassword, setIsShowPassword] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
+    const { setUser } = userStore();
 
     const login = async () => {
         try{ 
@@ -25,12 +27,23 @@ const Login = () => {
                 throw new Error('Password is required');
             }
             
-            const { error } = await supabase.auth.signInWithPassword({
+            const { data, error } = await supabase.auth.signInWithPassword({
                 email,
                 password
             });
  
+          
+
             if(!error){
+
+                const userData = {
+                    userid: data.user.id,
+                    name: data.user.user_metadata.display_name,
+                    email: data.user.email,
+                }    
+                
+                setUser(userData);
+
                 router.replace('dashboard');
             }else{
                 throw error;

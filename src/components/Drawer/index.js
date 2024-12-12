@@ -4,9 +4,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useSafeAreaInsets } from 'react-native-safe-area-context' 
 import { useRouter } from 'expo-router'
 import { supabase } from '../../lib/supabase'
+import { userStore } from '../../zustand/user'
 
 export default function DrawerContent(props) {
 
+    const user = userStore(state => state.user);
     const router = useRouter();
     const year = new Date().getFullYear();  
 
@@ -43,7 +45,7 @@ export default function DrawerContent(props) {
                     }}
                 > 
                     <Image source={require('../../assets/logo.png')} style={{ alignSelf: 'center', height: 150, width: 150 }} /> 
-                    <Text variant='titleLarge'>Boss Job</Text>
+                    <Text variant='titleLarge'>{user?.name ?? ''}</Text>
                 </View>
                 <DrawerItemList {...props} />
                 <DrawerItem
